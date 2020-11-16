@@ -23,13 +23,24 @@ whoami
 # 標準ユーザで以下が出来る？（出来ない場合、Administratorくれ、となる）
 - ping, nslookup, tracert -> 実行できる(Ping_Nslookup_Tracert.log)
 - Cドライブ配下のファイル読めるか -> 読めそう
-    - C:\PerfLogs
+    - Usersだと権限がなくて見れない
+        - C:\PerfLogs
+        - C:\Windows\LiveKernelReports
+        - C:\Windows\ModemLogs
+        - C:\Windows\Prefetch
+        - C:\Windows\ServiceState
+        - C:\Windows\Temp
+    - 他のフォルダと少し権限が違う（読めるがファイルの作成・削除はできない系）
+        - C:\Windows\AppReadiness
+        - C:\Windows\Registration
+        - C:\Windows\TAPI
+        - C:\Windows\Tasks
+        - C:\Windows\tracing
+- イベントビューア見れるか -> 見れそう（GUIで確認）
+- .ps1の実行 -> ExecutionPolicyの変更なしにデスクトップに作成したhoge.ps1の実行が可能なことを確認
 - 適当なインストーラの実行できるか
-- イベントビューア見れるか
 - サービスの起動停止
     - SQL Server
-- .ps1の実行
-    - ExecutionPolicy
 
 
 # 可能っぽいもの
@@ -51,5 +62,3 @@ whoami
 - デバイスマネージャの変更（確認は可能）
 - リモートの設定
 - システムの詳細設定
-- 
-
