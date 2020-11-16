@@ -1,0 +1,130 @@
+PS C:\Users\NormalUser> Get-LocalUser -Name NormalUser | Format-List # NormalUser??????????
+>>
+
+
+AccountExpires         :
+Description            :
+Enabled                : True
+FullName               : hoge
+PasswordChangeableDate : 2020/11/16 9:27:04
+PasswordExpires        :
+UserMayChangePassword  : True
+PasswordRequired       : True
+PasswordLastSet        : 2020/11/16 9:27:04
+LastLogon              : 2020/11/16 11:27:45
+Name                   : NormalUser
+SID                    : S-1-5-21-1342186295-3794931512-398705387-1008
+PrincipalSource        : Local
+ObjectClass            : User
+
+
+
+PS C:\Users\NormalUser>
+PS C:\Users\NormalUser> Get-LocalGroup -Name Users | Format-List # Users???????????
+>>
+
+
+Description     : Users are prevented from making accidental or intentional system-wide changes and can run most applic
+                  ations
+Name            : Users
+SID             : S-1-5-32-545
+PrincipalSource : Local
+ObjectClass     : Group
+
+
+
+PS C:\Users\NormalUser>
+PS C:\Users\NormalUser> Get-LocalGroupMember -Name Users | Format-List # -> NormalUser?????
+>>
+
+
+Name            : EC2AMAZ-EL7HT5B\NormalUser
+SID             : S-1-5-21-1342186295-3794931512-398705387-1008
+PrincipalSource : Local
+ObjectClass     : User
+
+Name            : NT AUTHORITY\Authenticated Users
+SID             : S-1-5-11
+PrincipalSource : Unknown
+ObjectClass     : Group
+
+Name            : NT AUTHORITY\INTERACTIVE
+SID             : S-1-5-4
+PrincipalSource : Unknown
+ObjectClass     : Group
+
+
+
+PS C:\Users\NormalUser>
+PS C:\Users\NormalUser> Get-Date
+>>
+
+2020年11月16日 12:59:11
+
+
+PS C:\Users\NormalUser>
+PS C:\Users\NormalUser> Get-WmiObject Win32_OperatingSystem # Windows????????
+>>
+
+
+SystemDirectory : C:\Windows\system32
+Organization    : Amazon.com
+BuildNumber     : 17763
+RegisteredUser  : EC2
+SerialNumber    : 00430-00000-00000-AA239
+Version         : 10.0.17763
+
+
+
+PS C:\Users\NormalUser>
+PS C:\Users\NormalUser> whoami
+>>
+ec2amaz-el7ht5b\normaluser
+PS C:\Users\NormalUser>
+PS C:\Users\NormalUser>
+PS C:\Users\NormalUser> ping www.google.com
+>>
+
+Pinging www.google.com [172.217.26.36] with 32 bytes of data:
+Reply from 172.217.26.36: bytes=32 time=3ms TTL=104
+Reply from 172.217.26.36: bytes=32 time=3ms TTL=104
+Reply from 172.217.26.36: bytes=32 time=3ms TTL=104
+Reply from 172.217.26.36: bytes=32 time=3ms TTL=104
+
+Ping statistics for 172.217.26.36:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 3ms, Maximum = 3ms, Average = 3ms
+PS C:\Users\NormalUser>
+PS C:\Users\NormalUser>
+PS C:\Users\NormalUser>
+PS C:\Users\NormalUser>
+PS C:\Users\NormalUser> nslookup www.google.com
+>>
+Server:  ip-172-31-0-2.ap-northeast-1.compute.internal
+Address:  172.31.0.2
+
+Non-authoritative answer:
+Name:    www.google.com
+Addresses:  2404:6800:4004:81c::2004
+          172.217.26.36
+
+PS C:\Users\NormalUser>
+PS C:\Users\NormalUser>
+PS C:\Users\NormalUser> tracert -h 2 www.google.com
+>>
+
+Tracing route to www.google.com [172.217.26.36]
+over a maximum of 2 hops:
+
+  1     4 ms     7 ms     7 ms  ec2-54-150-128-89.ap-northeast-1.compute.amazonaws.com [54.150.128.89]
+  2     *        *        *     Request timed out.
+
+Trace complete.
+PS C:\Users\NormalUser>
+PS C:\Users\NormalUser> date
+
+2020年11月16日 13:00:08
+
+
+PS C:\Users\NormalUser>
