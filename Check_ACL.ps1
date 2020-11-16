@@ -12,13 +12,21 @@ $target_folders | Foreach-Object {
   $folders = Get-ChildItem -Path "$_" | ? {$_.PsIsContainer -eq $true}
   $folders | Foreach-Object {
     $folder_path = $_.FullName
-    $acl = Get-Acl -Path $folder_path
-    $acl_obj = $acl.Access |
-      Where-Object {
-        $_.IdentityReference -match "Users" -and
-        $_.FilesyStemRights  -match "Read"
-      }
-    # ユーザ名、権限、フォルダパスを表示
-    Write-Output "$($acl_obj.IdentityReference) : $($acl_obj.FilesyStemRights) : $($_.FullName)"
+    try {
+      $acl = Get-Acl -Path $folder_path -ErrorAction Continue
+      $acl_obj = $acl.Access |
+        Where-Object {
+          $_.IdentityReference -match "Users" -and
+          $_.FilesyStemRights  -match "Read"
+        }
+      # ユーザ名、権限、フォルダパスを表示
+      Write-Output "$($acl_obj.IdentityReference) : $($acl_obj.FilesyStemRights) : ${folder_path}"
+    }
+    catch {
+      Write-Output "***** ERROR *****"
+      Write-Output "path -> ${folder_path}"
+      Write-Output $error[0]
+      Write-Output "***** ***** *****"
+    }
   }
 }
