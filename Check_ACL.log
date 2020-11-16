@@ -23,8 +23,7 @@ PS C:\Users\NormalUser> Get-LocalGroup -Name Users | Format-List # Users????????
 >>
 
 
-Description     : Users are prevented from making accidental or intentional system-wide changes and can run most applic
-                  ations
+Description     : Users are prevented from making accidental or intentional system-wide changes and can run most applications
 Name            : Users
 SID             : S-1-5-32-545
 PrincipalSource : Local
@@ -32,7 +31,6 @@ ObjectClass     : Group
 
 
 
-PS C:\Users\NormalUser>
 PS C:\Users\NormalUser> Get-LocalGroupMember -Name Users | Format-List # -> NormalUser?????
 >>
 
@@ -54,14 +52,12 @@ ObjectClass     : Group
 
 
 
-PS C:\Users\NormalUser>
 PS C:\Users\NormalUser> Get-Date
 >>
 
-2020年11月16日 12:54:42
+2020年11月16日 13:18:44
 
 
-PS C:\Users\NormalUser>
 PS C:\Users\NormalUser> Get-WmiObject Win32_OperatingSystem # Windows????????
 >>
 
@@ -75,38 +71,41 @@ Version         : 10.0.17763
 
 
 
-PS C:\Users\NormalUser>
 PS C:\Users\NormalUser> whoami
 >>
 ec2amaz-el7ht5b\normaluser
-PS C:\Users\NormalUser>
-PS C:\Users\NormalUser>
-PS C:\Users\NormalUser> $target_folders=@(
+PS C:\Users\NormalUser> # ????????
+>> $target_folders=@(
 >>   "C:\PerfLogs"
 >>   "C:\Program Files"
 >>   "C:\Program Files (x86)"
 >>   "C:\Windows"
 >> )
->>
-PS C:\Users\NormalUser>
-PS C:\Users\NormalUser>
-PS C:\Users\NormalUser>
 PS C:\Users\NormalUser> # ?????
 >> $target_folders | Foreach-Object {
 >>   # ??????????????????
 >>   $folders = Get-ChildItem -Path "$_" | ? {$_.PsIsContainer -eq $true}
 >>   $folders | Foreach-Object {
 >>     $folder_path = $_.FullName
->>     $acl = Get-Acl -Path $folder_path
->>     $acl_obj = $acl.Access |
->>       Where-Object {
->>         $_.IdentityReference -match "Users" -and
->>         $_.FilesyStemRights  -match "Read"
->>       }
->>     # ?????????????????
->>     Write-Output "$($acl_obj.IdentityReference) : $($acl_obj.FilesyStemRights) : $($_.FullName)"
+>>     try {
+>>       $acl = Get-Acl -Path $folder_path -ErrorAction Continue
+>>       $acl_obj = $acl.Access |
+>>         Where-Object {
+>>           $_.IdentityReference -match "Users" -and
+>>           $_.FilesyStemRights  -match "Read"
+>>         }
+>>       # ?????????????????
+>>       Write-Output "$($acl_obj.IdentityReference) : $($acl_obj.FilesyStemRights) : ${folder_path}"
+>>     }
+>>     catch {
+>>       Write-Output "***** ERROR *****"
+>>       Write-Output "path -> ${folder_path}"
+>>       Write-Output $error[0]
+>>       Write-Output "***** ***** *****"
+>>     }
 >>   }
 >> }
+>>
 Get-ChildItem : Access to the path 'C:\PerfLogs' is denied.
 At line:4 char:14
 +   $folders = Get-ChildItem -Path "$_" | ? {$_.PsIsContainer -eq $true ...
@@ -167,40 +166,46 @@ BUILTIN\Users : ReadAndExecute, Synchronize : C:\Windows\INF
 BUILTIN\Users : ReadAndExecute, Synchronize : C:\Windows\InputMethod
 BUILTIN\Users : ReadAndExecute, Synchronize : C:\Windows\ja-JP
 BUILTIN\Users : ReadAndExecute, Synchronize : C:\Windows\L2Schemas
+***** ERROR *****
+path -> C:\Windows\LiveKernelReports
 Get-Acl : Attempted to perform an unauthorized operation.
-At line:7 char:12
-+     $acl = Get-Acl -Path $folder_path
-+            ~~~~~~~~~~~~~~~~~~~~~~~~~~
+At line:8 char:14
++       $acl = Get-Acl -Path $folder_path -ErrorAction Continue
++              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     + CategoryInfo          : NotSpecified: (:) [Get-Acl], UnauthorizedAccessException
     + FullyQualifiedErrorId : System.UnauthorizedAccessException,Microsoft.PowerShell.Commands.GetAclCommand
 
-BUILTIN\Users : ReadAndExecute, Synchronize : C:\Windows\LiveKernelReports
+***** ***** *****
 BUILTIN\Users : ReadAndExecute, Synchronize : C:\Windows\Logs
 BUILTIN\Users : ReadAndExecute, Synchronize : C:\Windows\media
 BUILTIN\Users : ReadAndExecute, Synchronize : C:\Windows\Microsoft.NET
 BUILTIN\Users : ReadAndExecute, Synchronize : C:\Windows\Migration
+***** ERROR *****
+path -> C:\Windows\ModemLogs
 Get-Acl : Attempted to perform an unauthorized operation.
-At line:7 char:12
-+     $acl = Get-Acl -Path $folder_path
-+            ~~~~~~~~~~~~~~~~~~~~~~~~~~
+At line:8 char:14
++       $acl = Get-Acl -Path $folder_path -ErrorAction Continue
++              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     + CategoryInfo          : NotSpecified: (:) [Get-Acl], UnauthorizedAccessException
     + FullyQualifiedErrorId : System.UnauthorizedAccessException,Microsoft.PowerShell.Commands.GetAclCommand
 
-BUILTIN\Users : ReadAndExecute, Synchronize : C:\Windows\ModemLogs
+***** ***** *****
 BUILTIN\Users : ReadAndExecute, Synchronize : C:\Windows\OCR
 BUILTIN\Users : ReadAndExecute, Synchronize : C:\Windows\Offline Web Pages
 BUILTIN\Users : ReadAndExecute, Synchronize : C:\Windows\Panther
 BUILTIN\Users : ReadAndExecute, Synchronize : C:\Windows\Performance
 BUILTIN\Users : ReadAndExecute, Synchronize : C:\Windows\PLA
 BUILTIN\Users : ReadAndExecute, Synchronize : C:\Windows\PolicyDefinitions
+***** ERROR *****
+path -> C:\Windows\Prefetch
 Get-Acl : Attempted to perform an unauthorized operation.
-At line:7 char:12
-+     $acl = Get-Acl -Path $folder_path
-+            ~~~~~~~~~~~~~~~~~~~~~~~~~~
+At line:8 char:14
++       $acl = Get-Acl -Path $folder_path -ErrorAction Continue
++              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     + CategoryInfo          : NotSpecified: (:) [Get-Acl], UnauthorizedAccessException
     + FullyQualifiedErrorId : System.UnauthorizedAccessException,Microsoft.PowerShell.Commands.GetAclCommand
 
-BUILTIN\Users : ReadAndExecute, Synchronize : C:\Windows\Prefetch
+***** ***** *****
 BUILTIN\Users : ReadAndExecute, Synchronize : C:\Windows\PrintDialog
 BUILTIN\Users : ReadAndExecute, Synchronize : C:\Windows\Provisioning
  :  : C:\Windows\Registration
@@ -211,14 +216,16 @@ BUILTIN\Users : ReadAndExecute, Synchronize : C:\Windows\SchCache
 BUILTIN\Users : ReadAndExecute, Synchronize : C:\Windows\schemas
 BUILTIN\Users : ReadAndExecute, Synchronize : C:\Windows\security
 BUILTIN\Users : ReadAndExecute, Synchronize : C:\Windows\ServiceProfiles
+***** ERROR *****
+path -> C:\Windows\ServiceState
 Get-Acl : Attempted to perform an unauthorized operation.
-At line:7 char:12
-+     $acl = Get-Acl -Path $folder_path
-+            ~~~~~~~~~~~~~~~~~~~~~~~~~~
+At line:8 char:14
++       $acl = Get-Acl -Path $folder_path -ErrorAction Continue
++              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     + CategoryInfo          : NotSpecified: (:) [Get-Acl], UnauthorizedAccessException
     + FullyQualifiedErrorId : System.UnauthorizedAccessException,Microsoft.PowerShell.Commands.GetAclCommand
 
-BUILTIN\Users : ReadAndExecute, Synchronize : C:\Windows\ServiceState
+***** ***** *****
 BUILTIN\Users : ReadAndExecute, Synchronize : C:\Windows\servicing
 BUILTIN\Users : ReadAndExecute, Synchronize : C:\Windows\Setup
 BUILTIN\Users : ReadAndExecute, Synchronize : C:\Windows\ShellComponents
@@ -234,14 +241,16 @@ BUILTIN\Users : ReadAndExecute, Synchronize : C:\Windows\SystemResources
 BUILTIN\Users : ReadAndExecute, Synchronize : C:\Windows\SysWOW64
 BUILTIN\Users : Read, Synchronize : C:\Windows\TAPI
 NT AUTHORITY\Authenticated Users : CreateFiles, ReadAndExecute, Synchronize : C:\Windows\Tasks
+***** ERROR *****
+path -> C:\Windows\Temp
 Get-Acl : Attempted to perform an unauthorized operation.
-At line:7 char:12
-+     $acl = Get-Acl -Path $folder_path
-+            ~~~~~~~~~~~~~~~~~~~~~~~~~~
+At line:8 char:14
++       $acl = Get-Acl -Path $folder_path -ErrorAction Continue
++              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     + CategoryInfo          : NotSpecified: (:) [Get-Acl], UnauthorizedAccessException
     + FullyQualifiedErrorId : System.UnauthorizedAccessException,Microsoft.PowerShell.Commands.GetAclCommand
 
-NT AUTHORITY\Authenticated Users : CreateFiles, ReadAndExecute, Synchronize : C:\Windows\Temp
+***** ***** *****
 BUILTIN\Users : ReadAndExecute, Synchronize : C:\Windows\TextInput
 BUILTIN\Users BUILTIN\Users : Write, Read, Synchronize Write, ReadAndExecute, Synchronize : C:\Windows\tracing
 BUILTIN\Users : ReadAndExecute, Synchronize : C:\Windows\twain_32
@@ -250,10 +259,9 @@ BUILTIN\Users : ReadAndExecute, Synchronize : C:\Windows\WaaS
 BUILTIN\Users : ReadAndExecute, Synchronize : C:\Windows\Web
 BUILTIN\Users : ReadAndExecute, Synchronize : C:\Windows\WinSxS
 PS C:\Users\NormalUser>
-PS C:\Users\NormalUser>
 PS C:\Users\NormalUser> date
 
-2020年11月16日 12:55:08
+2020年11月16日 13:19:09
 
 
 PS C:\Users\NormalUser>
