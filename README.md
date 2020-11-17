@@ -5,12 +5,21 @@
     - t2.micro
 
 # ユーザ設定
-- Name : NormalUser
-- Password : kjkL3j89alKE（自分で作る）
 - Group : Users
 - ユーザ単位でのリモートデスクトップ許可 : 許可
 
-# 確認手順
+## ユーザ作成
+```PowerShell
+$username = "NormalUser"
+$password = "password" # "password"部分は適宜変えてね
+$secure = ConvertTo-SecureString -String $password -AsPlainText -Force
+New-LocalUser -Name $username -Password $secure
+Add-LocalGroupMember -Member $username -Group "Users"
+Add-LocalGroupMember -Member $username -Group "Remote Desktop Users" # リモデ出来るようになる
+```
+
+
+# 検証実施前の確認
 ```PowerShell
 Get-LocalUser -Name NormalUser | Format-List # NormalUserユーザが存在すること
 Get-LocalGroup -Name Users | Format-List # Usersグループが存在すること
