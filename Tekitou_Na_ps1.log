@@ -1,0 +1,80 @@
+
+
+AccountExpires         :
+Description            :
+Enabled                : True
+FullName               : hoge
+PasswordChangeableDate : 2020/11/16 23:56:18
+PasswordExpires        :
+UserMayChangePassword  : True
+PasswordRequired       : True
+PasswordLastSet        : 2020/11/16 23:56:18
+LastLogon              : 2020/11/17 0:47:37
+Name                   : NormalUser
+SID                    : S-1-5-21-1342186295-3794931512-398705387-1008
+PrincipalSource        : Local
+ObjectClass            : User
+
+
+
+
+
+Description     : Users are prevented from making accidental or intentional system-wide changes and can run most applic
+                  ations
+Name            : Users
+SID             : S-1-5-32-545
+PrincipalSource : Local
+ObjectClass     : Group
+
+
+
+
+
+Name            : EC2AMAZ-EL7HT5B\hoge
+SID             : S-1-5-21-1342186295-3794931512-398705387-1010
+PrincipalSource : Local
+ObjectClass     : User
+
+Name            : EC2AMAZ-EL7HT5B\NormalUser
+SID             : S-1-5-21-1342186295-3794931512-398705387-1008
+PrincipalSource : Local
+ObjectClass     : User
+
+Name            : NT AUTHORITY\Authenticated Users
+SID             : S-1-5-11
+PrincipalSource : Unknown
+ObjectClass     : Group
+
+Name            : NT AUTHORITY\INTERACTIVE
+SID             : S-1-5-4
+PrincipalSource : Unknown
+ObjectClass     : Group
+
+
+
+
+2020年11月17日 0:53:23
+
+SystemDirectory : C:\Windows\system32
+Organization    : Amazon.com
+BuildNumber     : 17763
+RegisteredUser  : EC2
+SerialNumber    : 00430-00000-00000-AA239
+Version         : 10.0.17763
+
+ec2amaz-el7ht5b\normaluser
+===
+Bypass
+===
+
+LastWriteTime : 2020/11/17 0:53:23
+Length        : 0
+Name          : test.txt
+
+
+LastWriteTime : 2020/11/17 0:53:23
+Length        : 16
+Name          : test.txt
+
+hello
+どうだった？:
