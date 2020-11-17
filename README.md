@@ -31,7 +31,7 @@ whoami
 
 # 標準ユーザで以下が出来る？（出来ない場合、Administratorくれ、となる）
 - ping, nslookup, tracert -> 実行できる(Ping_Nslookup_Tracert.log)
-- Cドライブ配下のファイル読めるか -> 読めそう
+- Cドライブ配下のファイル読めるか -> 一部例外（以下）あるが、基本読める(Check_ACL.log)
     - Usersだと権限がなくて見れない
         - C:\PerfLogs
         - C:\Windows\LiveKernelReports
@@ -45,8 +45,33 @@ whoami
         - C:\Windows\TAPI
         - C:\Windows\Tasks
         - C:\Windows\tracing
-- イベントビューア見れるか -> 見れそう（GUIで確認）
-- .ps1の実行 -> ExecutionPolicyの変更なしにデスクトップに作成したhoge.ps1の実行が可能なことを確認
+- .ps1の実行 -> できる(Tekitou_Na_ps1.log)
+- イベントビューア見れるか -> 一部例外（以下）があるが、基本読める(Get_WinEvent.log)
+    - 権限がなくて読めないもの一覧
+        - Microsoft-Windows-AppXDeploymentServer/Restricted
+        - Microsoft-Windows-ASN1/Operational
+        - Microsoft-Windows-CAPI2/Operational
+        - Microsoft-Windows-Crypto-NCrypt/Operational
+        - Microsoft-Windows-GroupPolicy/Operational
+        - Microsoft-Windows-Help/Operational
+        - Microsoft-Windows-Hyper-V-Hypervisor-Admin
+        - Microsoft-Windows-Hyper-V-Hypervisor-Operational
+        - Microsoft-Windows-LiveId/Operational
+        - Microsoft-Windows-NetworkProvider/Operational
+        - Microsoft-Windows-SmbClient/Audit
+        - Microsoft-Windows-SmbClient/Connectivity
+        - Microsoft-Windows-SMBClient/Operational
+        - Microsoft-Windows-SmbClient/Security
+        - Microsoft-Windows-SMBServer/Audit
+        - Microsoft-Windows-SMBServer/Connectivity
+        - Microsoft-Windows-SMBServer/Operational
+        - Microsoft-Windows-SMBServer/Security
+        - Microsoft-Windows-StateRepository/Restricted
+        - Microsoft-Windows-UAC-FileVirtualization/Operational
+        - Microsoft-Windows-Windows Firewall With Advanced Security/ConnectionSecurity
+        - Microsoft-Windows-Windows Firewall With Advanced Security/ConnectionSecurityVerbose
+        - Network Isolation Operational
+        - Security
 - 適当なインストーラの実行できるか
 - サービスの起動停止
     - SQL Server
