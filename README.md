@@ -1,8 +1,12 @@
+# 目的
+- 標準ユーザで何が出来て何が出来ないのか、確認する
+- 出来ないものはAdministratorが必要（暴論）
+
 # 検証環境
 - AWS
-- EC2
-    - Windows Server 2019
-    - t2.micro
+  - EC2
+      - Windows Server 2019
+      - t2.micro
 
 # ユーザ設定
 - Group : Users
@@ -29,7 +33,7 @@ Get-WmiObject Win32_OperatingSystem # Windowsのバージョン確認
 whoami
 ```
 
-# 標準ユーザで以下が出来る？（出来ない場合、Administratorくれ、となる）
+# 標準ユーザで出来ること、出来ないこと
 - ping, nslookup, tracert -> 実行できる(Ping_Nslookup_Tracert.log)
 - Cドライブ配下のファイル読めるか -> 一部例外（以下）あるが、基本読める(Check_ACL.log)
     - Usersだと権限がなくて見れない
@@ -82,11 +86,6 @@ whoami
     - 基本タスクの作成
     - タスクの作成
     - タスクのインポート
-- イベントビューア
-    - Application
-    - Security
-    - Setup
-    - システム
 - アプリケーションとサービスログ
 
 # できないもの
